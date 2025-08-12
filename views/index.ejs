@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samrat Salve — Professional Portfolio</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Animate on Scroll (AOS) Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Custom Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* * ==============================================
+         * CUSTOM STYLES & DESIGN SYSTEM
+         * ==============================================
+         */
+        :root {
+            --bg-dark: #0a101f;
+            --bg-light: #f8fafc;
+            --panel-dark: rgba(18, 27, 49, 0.6);
+            --panel-light: rgba(255, 255, 255, 0.6);
+            --border-dark: rgba(255, 255, 255, 0.1);
+            --border-light: rgba(0, 0, 0, 0.1);
+            --text-dark: #e2e8f0;
+            --text-light: #0f172a;
+            --accent-primary: #14b8a6; /* Teal */
+            --accent-secondary: #d946ef; /* Fuchsia */
+            --accent-glow: rgba(20, 184, 166, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+        
+        .dark body {
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+        }
+
+        /* Animated Aurora Background for Hero */
+        .hero-bg {
+            position: relative;
+            overflow: hidden;
+        }
+        .dark .hero-bg::before, .dark .hero-bg::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: 0;
+            opacity: 0.25;
+        }
+        .dark .hero-bg::before {
+            background: radial-gradient(circle, var(--accent-primary), transparent 60%);
+            top: -10%;
+            left: -20%;
+            animation: move-aurora-1 15s infinite alternate;
+        }
+        .dark .hero-bg::after {
+            background: radial-gradient(circle, var(--accent-secondary), transparent 60%);
+            bottom: -10%;
+            right: -20%;
+            animation: move-aurora-2 15s infinite alternate;
+        }
+        @keyframes move-aurora-1 {
+            from { transform: translate(-20%, -20%) scale(1); }
+            to { transform: translate(20%, 20%) scale(1.2); }
+        }
+        @keyframes move-aurora-2 {
+            from { transform: translate(20%, 20%) scale(1.2); }
+            to { transform: translate(-20%, -20%) scale(1); }
+        }
+
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background-color: var(--panel-light);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+        }
+        .dark .glass-card {
+            background-color: var(--panel-dark);
+            border: 1px solid var(--border-dark);
+        }
+        .glass-card:hover {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        /* Gradient text and button styles */
+        .text-gradient {
+            background-image: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .text-accent { color: var(--accent-primary); }
+        .btn-accent {
+            background-image: linear-gradient(to right, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px transparent;
+        }
+        .btn-accent:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px var(--accent-glow);
+        }
+        
+        /* Project Card 3D Tilt Effect */
+        .project-card-3d {
+            transition: transform 0.1s ease, opacity 0.4s ease, visibility 0.4s ease;
+            transform-style: preserve-3d;
+        }
+
+        /* Navbar background blur on scroll */
+        .navbar-scrolled {
+             background-color: var(--panel-light);
+             backdrop-filter: blur(10px);
+             -webkit-backdrop-filter: blur(10px);
+             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+             border-bottom: 1px solid var(--border-light);
+        }
+        .dark .navbar-scrolled {
+             background-color: var(--panel-dark);
+             border-bottom: 1px solid var(--border-dark);
+        }
+
+        /* Advanced Progress Bar */
+        .progress-bar-container {
+            width: 100%;
+            background-color: rgba(0,0,0,0.1);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        .dark .progress-bar-container {
+            background-color: rgba(255,255,255,0.1);
+        }
+        .progress-bar-fill {
+            height: 12px;
+            background-image: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+            border-radius: 999px;
+            width: 0; /* Initial width */
+            transition: width 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+    </style>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+      }
+    </script>
+</head>
+<body class="transition-colors duration-300">
+    
+    <!-- NAVBAR -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 p-4 transition-all duration-300">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-gradient">My Portfolio</a>
+            <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                <a href="#about" class="hover:text-accent transition-colors">About</a>
+                <a href="#skills" class="hover:text-accent transition-colors">Skills</a>
+                <a href="#projects" class="hover:text-accent transition-colors">Projects</a>
+                <a href="#contact" class="hover:text-accent transition-colors">Contact</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                 <button id="themeToggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors">
+                    <i id="themeIcon" class="fa-solid fa-moon text-xl"></i>
+                </button>
+                <button class="md:hidden text-2xl" id="mobileMenuBtn">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden mt-4 glass-card rounded-lg shadow-lg p-4">
+             <a href="#about" class="block py-2 hover:text-accent transition-colors">About</a>
+             <a href="#skills" class="block py-2 hover:text-accent transition-colors">Skills</a>
+             <a href="#projects" class="block py-2 hover:text-accent transition-colors">Projects</a>
+             <a href="#contact" class="block py-2 hover:text-accent transition-colors">Contact</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="min-h-screen hero-bg flex flex-col justify-center items-center text-center px-4">
+        <div class="z-10" data-aos="fade-up">
+             <div class="relative w-40 h-40 mx-auto mb-8">
+                <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-teal-400 to-fuchsia-500 animate-pulse blur-md"></div>
+                <img src="sam.jpeg" alt="Samrat Salve" class="relative w-full h-full rounded-full border-4 border-slate-50 dark:border-slate-900 object-cover">
+            </div>
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-4">
+                Hi, I'm <span class="text-gradient">Samrat Salve</span>
+            </h1>
+            <p id="typingLine" class="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-8 min-h-[2.5em]"></p>
+            <div class="flex justify-center gap-4">
+                <a href="#projects" class="btn-accent font-bold py-3 px-8 rounded-full">
+                    Explore My Work
+                </a>
+                <a href="resume.pdf" download class="bg-slate-200 dark:bg-slate-800 font-bold py-3 px-8 rounded-full hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors">
+                    <i class="fa-solid fa-download mr-2"></i> Resume
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ABOUT -->
+    <section id="about" class="py-24">
+        <div class="container mx-auto px-4">
+             <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl font-bold mb-4" data-aos="fade-up">About Me</h2>
+                <p class="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed" data-aos="fade-up" data-aos-delay="100">
+                    I am a detail-oriented Full-Stack Developer from Jamkhed, India, currently completing my TYBBA(CA) at Jamkhed Mahavidyalaya. I am actively honing my skills through a professional internship at A2Z IT Hub, Ahilyanagar. My passion lies in crafting clean, efficient code and creating user-friendly interfaces that are both beautiful and performant. I thrive on solving complex problems and am constantly learning new technologies to push the boundaries of what's possible on the web.
+                </p>
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <a href="#contact" class="btn-accent font-bold py-3 px-6 rounded-full">
+                       <i class="fa-solid fa-paper-plane mr-2"></i> Get in Touch
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="py-24 bg-slate-100 dark:bg-slate-950">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-16" data-aos="fade-up">Technical Proficiency</h2>
+            <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-x-12 gap-y-8">
+                <!-- Skill Item -->
+                <div class="skill-item" data-aos="fade-right">
+                    <div class="flex justify-between items-end mb-2">
+                        <h3 class="font-semibold">HTML</h3>
+                        <p class="text-sm text-gradient font-bold">0%</p>
+                    </div>
+                    <div class="progress-bar-container"><div class="progress-bar-fill" data-width="98"></div></div>
+                </div>
+                <!-- Skill Item -->
+                <div class="skill-item" data-aos="fade-left">
+                    <div class="flex justify-between items-end mb-2">
+                        <h3 class="font-semibold">CSS & Tailwind</h3>
+                        <p class="text-sm text-gradient font-bold">0%</p>
+                    </div>
+                    <div class="progress-bar-container"><div class="progress-bar-fill" data-width="95"></div></div>
+                </div>
+                 <!-- Skill Item -->
+                <div class="skill-item" data-aos="fade-right">
+                    <div class="flex justify-between items-end mb-2">
+                        <h3 class="font-semibold">C / C++</h3>
+                        <p class="text-sm text-gradient font-bold">0%</p>
+                    </div>
+                    <div class="progress-bar-container"><div class="progress-bar-fill" data-width="85"></div></div>
+                </div>
+                 <!-- Skill Item -->
+                <div class="skill-item" data-aos="fade-left">
+                    <div class="flex justify-between items-end mb-2">
+                        <h3 class="font-semibold">PHP</h3>
+                        <p class="text-sm text-gradient font-bold">0%</p>
+                    </div>
+                    <div class="progress-bar-container"><div class="progress-bar-fill" data-width="80"></div></div>
+                </div>
+                <!-- Skill Item -->
+                <div class="skill-item" data-aos="fade-right">
+                    <div class="flex justify-between items-end mb-2">
+                        <h3 class="font-semibold">JavaScript & React</h3>
+                        <p class="text-sm text-gradient font-bold">0%</p>
+                    </div>
+                    <div class="progress-bar-container"><div class="progress-bar-fill" data-width="92"></div></div>
+                </div>
+                <!-- Skill Item -->
+                <div class="skill-item" data-aos="fade-left">
+                    <div class="flex justify-between items-end mb-2">
+                        <h3 class="font-semibold">Node.js & Express</h3>
+                        <p class="text-sm text-gradient font-bold">0%</p>
+                    </div>
+                    <div class="progress-bar-container"><div class="progress-bar-fill" data-width="88"></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="py-24">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-4" data-aos="fade-up">Featured Projects</h2>
+            <p class="text-center text-slate-500 dark:text-slate-400 mb-12" data-aos="fade-up" data-aos-delay="100">A selection of my work. Click on any project to see it live.</p>
+            
+            <!-- Projects Grid -->
+            <div id="projectsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Projects will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-24 bg-slate-100 dark:bg-slate-950">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-4" data-aos="fade-up">Let's Build Something Together</h2>
+            <p class="text-slate-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto text-center" data-aos="fade-up" data-aos-delay="100">
+                Have a project idea or looking to hire? I'm always open to discussing new opportunities. Drop me a line below.
+            </p>
+            <div data-aos="fade-up" data-aos-delay="200" class="max-w-2xl mx-auto">
+                <form id="contactForm" class="glass-card p-8 rounded-lg text-left">
+                    <div id="form-message" class="hidden mb-4 p-3 rounded-lg"></div>
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label for="name" class="block mb-2 font-semibold text-sm">Name</label>
+                            <input type="text" id="name" name="name" required class="w-full p-3 rounded-md bg-slate-200 dark:bg-slate-800 border-2 border-transparent focus:border-accent-primary focus:outline-none transition-colors">
+                        </div>
+                        <div>
+                            <label for="email" class="block mb-2 font-semibold text-sm">Email</label>
+                            <input type="email" id="email" name="email" required class="w-full p-3 rounded-md bg-slate-200 dark:bg-slate-800 border-2 border-transparent focus:border-accent-primary focus:outline-none transition-colors">
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <label for="message" class="block mb-2 font-semibold text-sm">Message</label>
+                        <textarea id="message" name="message" rows="5" required class="w-full p-3 rounded-md bg-slate-200 dark:bg-slate-800 border-2 border-transparent focus:border-accent-primary focus:outline-none transition-colors"></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" id="submitBtn" class="btn-accent text-lg font-bold py-3 px-10 rounded-full w-full md:w-auto">
+                            Send Message
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-8">
+        <div class="container mx-auto px-4 text-center text-slate-500 dark:text-slate-600">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="#" class="text-2xl hover:text-accent transition-colors"><i class="fab fa-github"></i></a>
+                <a href="#" class="text-2xl hover:text-accent transition-colors"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="text-2xl hover:text-accent transition-colors"><i class="fab fa-twitter"></i></a>
+            </div>
+            <p class="text-sm">&copy; <span id="year"></span> Samrat Salve. Crafted with <i class="fa-solid fa-heart text-gradient"></i> in Jamkhed, India.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+        
+            const projectsData = [
+                {
+                    title: "Jewellery Store Website",
+                    description: "A beautiful online storefront for a jewellery business, built with HTML, CSS, and JavaScript.",
+                    imageUrl: "https://images.pexels.com/photos/1162983/pexels-photo-1162983.jpeg",
+                    liveUrl: "https://SamratSalve530.github.io/jwellery-website" // <-- REPLACE with your hosted project URL
+                },
+                {
+                    title: "React Task Manager",
+                    description: "A modern, single-page application for managing tasks, built with React and featuring a clean, responsive user interface.",
+                    imageUrl: "https://placehold.co/600x400/14b8a6/f8fafc?text=React+Tasks",
+                    liveUrl: "#" // <-- REPLACE with your hosted project URL
+                },
+                {
+                    title: "Simple PHP Website",
+                    description: "A dynamic website built with PHP, demonstrating server-side scripting and database integration.",
+                    imageUrl: "https://placehold.co/600x400/8b5cf6/f8fafc?text=PHP+Site",
+                    liveUrl: "#" // <-- REPLACE with your hosted project URL
+                }
+            ];
+
+            // --- RENDER PROJECTS ---
+            const projectsGrid = document.getElementById('projectsGrid');
+
+            function renderProjects() {
+                projectsGrid.innerHTML = ''; // Clear existing projects
+
+                projectsData.forEach((project, index) => {
+                    const projectCard = document.createElement('div');
+                    projectCard.className = 'project-card-3d';
+                    projectCard.setAttribute('data-aos', 'fade-up');
+                    projectCard.setAttribute('data-aos-delay', (index % 3) * 100);
+
+                    projectCard.innerHTML = `
+                        <a href="${project.liveUrl}" target="_blank" class="block">
+                            <div class="glass-card rounded-lg h-full flex flex-col overflow-hidden">
+                                <img src="${project.imageUrl}" alt="${project.title}" class="w-full h-48 object-cover">
+                                <div class="p-6 flex-grow flex flex-col">
+                                    <h3 class="text-xl font-bold mb-2">${project.title}</h3>
+                                    <p class="text-slate-600 dark:text-slate-400 mb-4 flex-grow text-sm">${project.description}</p>
+                                    <div class="mt-auto pt-4 border-t border-slate-200 dark:border-slate-700">
+                                        <span class="text-accent font-semibold">View Project <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    `;
+                    projectsGrid.appendChild(projectCard);
+                });
+                
+                // Re-apply 3D tilt effect to newly created cards
+                apply3DTilt();
+            }
+
+            // --- INITIALIZE AOS ---
+            AOS.init({ duration: 700, once: true, offset: 50 });
+
+            // --- THEME TOGGLE ---
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            const htmlEl = document.documentElement;
+
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                htmlEl.classList.add('dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+            }
+
+            themeToggle.addEventListener('click', () => {
+                htmlEl.classList.toggle('dark');
+                const isDark = htmlEl.classList.contains('dark');
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                themeIcon.className = isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+            });
+
+            // --- TYPING EFFECT ---
+            const lines = ["Full-Stack Developer", "Creative Problem Solver", "UI/UX Enthusiast"];
+            const typingElem = document.getElementById('typingLine');
+            let lineIndex = 0, charIndex = 0, isDeleting = false;
+
+            function typeLoop() {
+                const currentLine = lines[lineIndex];
+                const typeSpeed = isDeleting ? 60 : 120;
+                if (!isDeleting) {
+                    typingElem.textContent = currentLine.slice(0, ++charIndex);
+                    if (charIndex === currentLine.length) setTimeout(() => isDeleting = true, 2000);
+                } else {
+                    typingElem.textContent = currentLine.slice(0, --charIndex);
+                    if (charIndex === 0) {
+                        isDeleting = false;
+                        lineIndex = (lineIndex + 1) % lines.length;
+                    }
+                }
+                setTimeout(typeLoop, typeSpeed);
+            }
+            typeLoop();
+
+            // --- ANIMATED PROGRESS BARS ---
+            const skillsSection = document.getElementById('skills');
+            const skillItems = document.querySelectorAll('.skill-item');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        skillItems.forEach(item => {
+                            const bar = item.querySelector('.progress-bar-fill');
+                            const percentText = item.querySelector('p');
+                            const targetWidthStr = bar.dataset.width;
+                            const targetPercent = parseInt(targetWidthStr, 10);
+
+                            if (!isNaN(targetPercent)) {
+                                bar.style.width = targetPercent + '%';
+
+                                let currentPercent = 0;
+                                const interval = setInterval(() => {
+                                    if (currentPercent >= targetPercent) {
+                                        clearInterval(interval);
+                                        percentText.textContent = `${targetPercent}%`;
+                                    } else {
+                                        currentPercent++;
+                                        percentText.textContent = `${currentPercent}%`;
+                                    }
+                                }, 20); 
+                            }
+                        });
+                        observer.unobserve(skillsSection);
+                    }
+                });
+            }, { threshold: 0.3 });
+            
+            if (skillsSection) {
+                observer.observe(skillsSection);
+            }
+
+            // --- 3D PROJECT CARD TILT ---
+            function apply3DTilt() {
+                const cards = document.querySelectorAll('.project-card-3d');
+                cards.forEach(card => {
+                    card.addEventListener('mousemove', (e) => {
+                        const rect = card.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        const centerX = rect.width / 2;
+                        const centerY = rect.height / 2;
+                        const rotateX = ((y - centerY) / centerY) * -4;
+                        const rotateY = ((x - centerX) / centerX) * 4;
+                        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`;
+                    });
+                    card.addEventListener('mouseleave', () => {
+                        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                    });
+                });
+            }
+
+            // --- NAVBAR & MOBILE MENU ---
+            const navbar = document.getElementById('navbar');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            window.addEventListener('scroll', () => {
+                navbar.classList.toggle('navbar-scrolled', window.scrollY > 50);
+            });
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // --- CONTACT FORM ---
+            const contactForm = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const formMessage = document.getElementById('form-message');
+
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Sending...';
+
+                setTimeout(() => {
+                    formMessage.textContent = 'Thank you! Your message has been sent.';
+                    formMessage.className = 'p-3 rounded-md bg-teal-100 dark:bg-teal-900/50 text-teal-700 dark:text-teal-300 block mb-4 text-center';
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = "Send Message";
+                    contactForm.reset();
+                    
+                    setTimeout(() => formMessage.style.display = 'none', 5000);
+                }, 1500);
+            });
+
+            // --- SET CURRENT YEAR & INITIALIZE PROJECTS ---
+            document.getElementById('year').textContent = new Date().getFullYear();
+            renderProjects(); // Initial render of all projects
+        });
+    </script>
+</body>
+</html>

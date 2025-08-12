@@ -1,0 +1,221 @@
+/* ==============================================
+  === Responsive CSS with Aurora Background ====
+  ==============================================
+  This CSS includes media queries to ensure the layout and effects 
+  are optimized for tablets and mobile devices.
+*/
+
+:root {
+    --bg-dark: #0a101f;
+    --bg-light: #f8fafc;
+    --panel-dark: rgba(18, 27, 49, 0.6);
+    --panel-light: rgba(255, 255, 255, 0.6);
+    --border-dark: rgba(255, 255, 255, 0.1);
+    --border-light: rgba(0, 0, 0, 0.1);
+    --text-dark: #e2e8f0;
+    --text-light: #0f172a;
+    --accent-primary: #14b8a6; /* Teal */
+    --accent-secondary: #d946ef; /* Fuchsia */
+    --accent-glow: rgba(20, 184, 166, 0.3);
+}
+
+/* Base body styles */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-light);
+    overflow-x: hidden; /* Prevents horizontal scroll */
+}
+
+.dark body {
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
+}
+
+/* --- Animated Aurora Background for Hero --- 
+  The pseudo-elements are positioned absolutely to create the background effect.
+*/
+.hero-bg {
+    position: relative;
+    overflow: hidden;
+}
+
+.dark .hero-bg::before,
+.dark .hero-bg::after {
+    content: '';
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    filter: blur(120px);
+    z-index: 0;
+    opacity: 0.25;
+}
+
+.dark .hero-bg::before {
+    background: radial-gradient(circle, var(--accent-primary), transparent 60%);
+    top: -10%;
+    left: -20%;
+    animation: move-aurora-1 15s infinite alternate;
+}
+
+.dark .hero-bg::after {
+    background: radial-gradient(circle, var(--accent-secondary), transparent 60%);
+    bottom: -10%;
+    right: -20%;
+    animation: move-aurora-2 15s infinite alternate;
+}
+
+/* Keyframe animations for the aurora effect */
+@keyframes move-aurora-1 {
+    from { transform: translate(-20%, -20%) scale(1); }
+    to { transform: translate(20%, 20%) scale(1.2); }
+}
+
+@keyframes move-aurora-2 {
+    from { transform: translate(20%, 20%) scale(1.2); }
+    to { transform: translate(-20%, -20%) scale(1); }
+}
+
+/* --- General Component Styles ---
+  These styles are generally flexible and don't need many overrides.
+*/
+
+/* Glassmorphism Card Style */
+.glass-card {
+    background-color: var(--panel-light);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-light);
+    transition: all 0.3s ease;
+}
+
+.dark .glass-card {
+    background-color: var(--panel-dark);
+    border: 1px solid var(--border-dark);
+}
+
+.glass-card:hover {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 20px var(--accent-glow);
+}
+
+/* Gradient text and button styles */
+.text-gradient {
+    background-image: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.text-accent { color: var(--accent-primary); }
+
+.btn-accent {
+    background-image: linear-gradient(to right, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+    color: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px transparent;
+}
+
+.btn-accent:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px var(--accent-glow);
+}
+
+/* Project Card 3D Tilt Effect */
+.project-card-3d {
+    transition: transform 0.1s ease, opacity 0.4s ease, visibility 0.4s ease;
+    transform-style: preserve-3d;
+}
+
+/* Navbar background blur on scroll */
+.navbar-scrolled {
+    background-color: var(--panel-light);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.dark .navbar-scrolled {
+    background-color: var(--panel-dark);
+    border-bottom: 1px solid var(--border-dark);
+}
+
+/* Advanced Progress Bar */
+.progress-bar-container {
+    width: 100%;
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.dark .progress-bar-container {
+    background-color: rgba(255,255,255,0.1);
+}
+
+.progress-bar-fill {
+    height: 12px;
+    background-image: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+    border-radius: 999px;
+    width: 0; /* Initial width */
+    transition: width 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+    box-shadow: 0 0 15px var(--accent-glow);
+}
+
+/* ==============================================
+  ========= Media Queries for Responsiveness ===
+  ==============================================
+*/
+
+/* --- For Tablets (e.g., iPads) --- */
+@media (max-width: 768px) {
+    .dark .hero-bg::before,
+    .dark .hero-bg::after {
+        /* Reduce size and blur for smaller screens to prevent overpowering the view */
+        width: 350px;
+        height: 350px;
+        filter: blur(100px);
+    }
+
+    .dark .hero-bg::before {
+        left: -25%;
+    }
+
+    .dark .hero-bg::after {
+        right: -25%;
+    }
+}
+
+/* --- For Mobile Phones --- */
+@media (max-width: 480px) {
+    .dark .hero-bg::before,
+    .dark .hero-bg::after {
+        /* Further reduce size and adjust blur for small mobile screens */
+        width: 250px;
+        height: 250px;
+        filter: blur(80px);
+        opacity: 0.3; /* Slightly increase opacity for visibility on small screens */
+    }
+
+    .dark .hero-bg::before {
+        top: 0;
+        left: -30%;
+    }
+
+    .dark .hero-bg::after {
+        bottom: 0;
+        right: -30%;
+    }
+
+    /* Adjust animation for a more subtle effect on mobile */
+    @keyframes move-aurora-1 {
+        from { transform: translate(-15%, -15%) scale(1); }
+        to { transform: translate(15%, 15%) scale(1.1); }
+    }
+
+    @keyframes move-aurora-2 {
+        from { transform: translate(15%, 15%) scale(1.1); }
+        to { transform: translate(-15%, -15%) scale(1); }
+    }
+}
